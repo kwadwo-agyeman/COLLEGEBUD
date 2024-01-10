@@ -5,7 +5,7 @@ import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 import ActivityCards from "./components/ActivityCards";
 import Preloader from "./components/Preloader";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { useAuth } from "./components/AuthProvider";
 import axios from "./api/axios";
 
@@ -33,6 +33,27 @@ function Profile(props) {
   );
   const user = auth.username;
   console.log(cardArr, cardDetails, title, description);
+
+  const deleteActivity = async (index) => {
+    try {
+      const response = await axios.delete("/deleteActivity", {
+        headers: {
+          username: user,
+          index: index,
+        },
+        withCredentials: true,
+      });
+
+      console.log("success");
+      setCardArr(response?.data?.updatedCardArr);
+      setCardDetails(response?.data?.updatedCardDetails);
+      setTitle(response?.data?.updatedTitle);
+      setDescription(response?.data?.updatedDescription);
+      setFormData(response?.data?.updateFormData)
+    } catch (err) {
+      console.log("Failed");
+    }
+  };
 
   useEffect(() => {
     user !== "" &&
@@ -230,7 +251,7 @@ function Profile(props) {
         <Stack direction="row" spacing={{ xs: 1.4, sm: 2 }}>
           <Sidebar addCard={addCard} />
 
-          <div style={{ marginBottom: "3rem" }}>
+          <Box flex={9} p={3} sx={{}}>
             {loading ? (
               <div>sam</div>
             ) : (
@@ -244,6 +265,7 @@ function Profile(props) {
                 description={description}
                 formData={formData}
                 addCard={addCard}
+                deleteActivity={deleteActivity}
                 // deleteCard={deleteCard}
                 handleFormValueChange={handleFormValueChange}
                 handleCloseModal={handleCloseModal}
@@ -251,7 +273,7 @@ function Profile(props) {
                 modalStates={modalStates}
               />
             )}
-          </div>
+          </Box>
         </Stack>
       </div>
       <div style={{}}>

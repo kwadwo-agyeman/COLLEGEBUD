@@ -90,10 +90,10 @@ console.log(files.length)
 
   console.log(props.cardDetails);
   console.log(props.title);
-  console.log(props.description)
+  console.log(props.description);
 
   return (
-    <Box flex={{xs:12,sm:9}} p={3} sx={{}}>
+    <Box flex={9} p={3} sx={{}}>
       <Grid container spacing={2}>
         {props.cardArr.map((_, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
@@ -212,7 +212,7 @@ console.log(files.length)
 
                 <Tooltip
                   title="delete card"
-                  onClick={() => props.deleteCard(index)}
+                  onClick={() => props.deleteActivity(index)}
                 >
                   <Button size="small">
                     <Typography>Delete</Typography>

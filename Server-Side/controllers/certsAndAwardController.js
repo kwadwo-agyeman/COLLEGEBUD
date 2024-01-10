@@ -29,7 +29,7 @@ const saveCertsAndAward = async (files, user) => {
 
         try {
             await fsPromises.writeFile(filePath, files[key][0].buffer);
-            console.log('File saved at:', filePath);
+            // console.log('File saved at:', filePath);
             return filePath; // Return the file path
         } catch (writeError) {
             console.error('Error writing file:', writeError);
@@ -55,7 +55,7 @@ const handleCertsAndAwards = async (req, res) => {
         const username = req.headers.username;
         const files = req.files;
         await saveCertsAndAward(files, username);
-        console.log(username, req.files);
+        // console.log(username, req.files);
     } catch (err) {
         console.error(err);
         // Handle the error and send a response to the client if needed

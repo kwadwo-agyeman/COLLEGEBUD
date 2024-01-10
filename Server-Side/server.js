@@ -40,7 +40,8 @@ app.use('/getProfilePic', require('./routes/getProfileImg'));
 app.use('/uploadCertsAndAwards', require('./routes/certsAndAwards'));
 app.use('/getCertsNAwards', require('./routes/getCertsAndAwards'));
 app.use('/updateActivities', require('./routes/updateActivityCards'));
-app.use('/getActivitiesDetails', require('./routes/getActivityDetails'))
+app.use('/getActivitiesDetails', require('./routes/getActivityDetails'));
+app.use('/deleteActivity', require('./routes/deleteActivity'));
 app.use(verifyJWT)
 
 // app.use('/')
