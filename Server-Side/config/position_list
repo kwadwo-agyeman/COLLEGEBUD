@@ -1,0 +1,7 @@
+const POSITION_LIST = {
+    User: 1002,
+    Admin: 1102,
+    Editor: 1112
+}
+
+module.exports = POSITION_LIST

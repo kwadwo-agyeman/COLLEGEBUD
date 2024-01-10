@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "college-Buddy",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - college-Buddy",
+			"detail": "vite build"
+		}
+	]
+}

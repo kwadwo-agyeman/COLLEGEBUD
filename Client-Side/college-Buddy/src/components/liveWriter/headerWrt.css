@@ -1,0 +1,7 @@
+.container{
+    font-family: 'Erica One', sans-serif;
+    color: white;
+    display: grid;
+    font-size: 4rem;
+    place-items: center;
+}

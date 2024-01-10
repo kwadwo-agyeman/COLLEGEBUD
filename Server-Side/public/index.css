@@ -1,0 +1,10 @@
+body{
+    background-color: black;
+    display:grid;
+    place-items: center;
+}
+
+.not--Found{
+    color:white;
+    font-size: 9rem;
+}

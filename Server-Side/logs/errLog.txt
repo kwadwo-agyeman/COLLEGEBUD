@@ -1,0 +1,9 @@
+336e8e4c-cadc-4d8c-8d6d-35c0ee5fb425	2023/12/29 16:27:22	Error: Error: Not Allowed By CORS
+0eca853c-ce9e-4647-9a97-fb476a6eb932	2024/01/05 20:48:24	Error: PayloadTooLargeError: request entity too large
+03d262ce-d491-4400-a81b-45cf4304d0b9	2024/01/06 23:01:10	Error: Error: Invalid file type. Only PNG, JPEG, and JPG files are allowed.
+15816baf-a5d9-435d-a48f-f45fbf1fdaa1	2024/01/08 15:22:54	Error: MulterError: Unexpected field
+b17d2c57-a99f-43a8-8968-d169de4555a4	2024/01/08 15:34:41	Error: Error: Invalid file type. Only PNG, JPEG, and JPG files are allowed.
+7c3578b3-b0bf-4558-9120-1d6540827fdc	2024/01/08 15:34:46	Error: Error: Invalid file type. Only PNG, JPEG, and JPG files are allowed.
+f8a8f0ca-4ac8-4ed4-802d-8e3eaafa76ba	2024/01/08 15:34:58	Error: Error: Invalid file type. Only PNG, JPEG, and JPG files are allowed.
+3b887570-10ab-4ee0-9bc6-f9d135ddb9c8	2024/01/08 21:14:10	Error: Error: Invalid file type. Only PNG, JPEG, and JPG files are allowed.
+9573db81-1e56-4190-942d-37790cc38487	2024/01/08 21:38:59	Error: Error: Invalid file type. Only PNG, JPEG, and JPG files are allowed.
