@@ -33,7 +33,8 @@ function Header() {
           zIndex: 444,
         }}
       >
-        {/* <HeaderWrite /> */}
+        <HeaderWrite />
+  
       </Box>
     </Box>
   );

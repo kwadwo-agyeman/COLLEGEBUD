@@ -1,7 +1,22 @@
 .container{
-    font-family: 'Erica One', sans-serif;
-    color: white;
     display: grid;
     font-size: 4rem;
     place-items: center;
+}
+
+@media screen and (max-width: 600px) {
+    .container{
+        font-size: 2rem;
+    }
+    
+}
+.firstLetter{
+    font-family: 'Erica One', sans-serif;
+    color: white;
+
+}
+
+.secondLetter{
+    font-family: 'Erica One', sans-serif;
+    color: white;
 }

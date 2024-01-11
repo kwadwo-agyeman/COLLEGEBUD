@@ -1,29 +1,32 @@
-import { React, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./headerWrt.css";
 
 function LiveLetter() {
-  const [letters, setLetters] = useState("");
-  const homepageLetters = "samuel";
+  const [letters, setLetters] = useState("COLLEGE BUDDY");
+  const words = [
+    "EXPLORE PASSIONS",
+    "ACADEMIC EXCELLENCE",
+    "NAVIGATE APPLICATIONS",
+    "EMBRACE LEADERSHIP",
+    "CULTIVATE SUCCESS"
+  ];
+    let index = 0;
+
   useEffect(() => {
-    let letterIndex = 0;
+    const intervalId = setInterval(() => {
+      setLetters(words[index++ % words.length]);
+    }, 700);
 
-    const writeLettersInterval = setInterval(() => {
-      setLetters((prev) => {
-        if (letterIndex < homepageLetters.length) {
-          // const nextLetter = homepageLetters[letterIndex];
-          // letterIndex = (letterIndex + 1) % homepageLetters.length;
-          return prev + nextLetter;
-        } else if(letterIndex > homepageLetters.length){
-          letterIndex = 0;
-          return "";
-        }
-      });
-    }, 100);
+    // Clear interval on component unmount or cleanup
+    return () => clearInterval(intervalId);
+  }, []);
 
-    // Clean up the interval on component unmount
-    return () => clearInterval(writeLettersInterval);
-  }, [homepageLetters]);
-  return <div className="container">{letters}</div>;
+  return (
+    <div className="container" >
+      <span className="firstLetter" style={{ color: "#7DDF64" }}>{letters.split(" ")[0]}</span>{" "}
+      <span className="secondLetter" style={{ color: "#3399FF" }}>{letters.split(" ")[1]}</span>
+    </div>
+  );
 }
 
 export default LiveLetter;
