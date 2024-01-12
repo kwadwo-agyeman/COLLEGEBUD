@@ -1,6 +1,5 @@
 const fsPromises = require('fs').promises;
 const users = require('../models/cbUsers');
-const path = require('path');
 
 const handleGetCertsAndAwards = async (req, res) => {
     try {

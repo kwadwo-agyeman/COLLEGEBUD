@@ -42,6 +42,7 @@ app.use('/getCertsNAwards', require('./routes/getCertsAndAwards'));
 app.use('/updateActivities', require('./routes/updateActivityCards'));
 app.use('/getActivitiesDetails', require('./routes/getActivityDetails'));
 app.use('/deleteActivity', require('./routes/deleteActivity'));
+app.use('/activityFiles', require('./routes/activityFiles'));
 app.use(verifyJWT)
 
 // app.use('/')

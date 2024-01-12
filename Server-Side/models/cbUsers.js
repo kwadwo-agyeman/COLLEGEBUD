@@ -71,7 +71,8 @@ const userSchema = new Schema({
     title:Array,
     formData:Array,
     description:Array,
-    modalStates:Array
+    modalStates:Array,
+    selectedActivityFiles:Array
 });
 
 module.exports = mongoose.model("cbUsers", userSchema);

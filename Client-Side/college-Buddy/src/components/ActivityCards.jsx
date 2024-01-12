@@ -22,6 +22,8 @@ import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { styled } from "@mui/material";
 import React from "react";
 import { useState } from "react";
+import axios from "../api/axios";
+import { useAuth } from "./AuthProvider";
 
 const StyledCardAction = styled(CardActions)({
   display: "flex",
@@ -39,7 +41,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: {xs:"96%",sm:"80%"},
+  width: { xs: "96%", sm: "80%" },
   boxShadow: 24,
   p: 4,
   height: "80%",
@@ -48,7 +50,7 @@ const style = {
 };
 
 function ActivityCards(props) {
-  console.log(props.cardArr)
+  console.log(props.cardArr);
   //controls form editing
   const [disable, setDisable] = useState(props.cardArr.map(() => true));
   //Image selection
@@ -56,29 +58,69 @@ function ActivityCards(props) {
     props.cardArr.map(() => [])
   );
   //Image files length
-  const [imageLength,setImageLength] = useState(props.cardArr.map(()=>0))
-  //handle image selection
-  const handleImageChange = (e, index) => {
-    const files = e.target.files;
-    setImageLength((prevLength)=>{
-      const updatedLength = [...prevLength];
-      updatedLength[index] = files.length;
-      return updatedLength
-    })
-console.log(files.length)
-    if (files.length > 0) {
-      const newImages = Array.from(files).map((file) => ({
-        url: URL.createObjectURL(file),
-        fileData: file,
-      }));
+  const [imageLength, setImageLength] = useState(props.cardArr.map(() => 0));
 
-      setSelectedImage((prevImages) => {
-        const updatedImageSelect = [...prevImages];
-        updatedImageSelect[index] = newImages;
-        return updatedImageSelect;
-      });
+  const {auth} = useAuth();
+  const user = auth.username;
+
+  //send Image files
+  const handleImageChange = async (e, index) => {
+    try {
+      const files = e.target.files;
+      console.log(files)
+      const formData = new FormData();
+      console.log(formData)
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        formData.append(`Activity_${i + 1}`,file);
+      };
+
+      // setSelectedImage((prevArr)=>{
+      //   const updatedArr = [...prevArr];
+      //   updatedArr[index] = formData;
+      //   return updatedArr;
+      // })
+
+      const response = await axios.post('/activityFiles',
+      formData,
+      {
+        headers:{
+          'Content-Type':'multipart/form-data',
+          selectedImage: JSON.stringify({selectedImage}),
+          username: user,
+          index: index
+        },
+        withCredentials: true
+      }
+      )
+      console.log("success");
+    } catch (err) {
+      console.log("failure");
     }
   };
+  //handle image selection
+  // const handleImageChange = (e, index) => {
+  //   const files = e.target.files;
+  //   setImageLength((prevLength) => {
+  //     const updatedLength = [...prevLength];
+  //     updatedLength[index] = files.length;
+  //     return updatedLength;
+  //   });
+  //   console.log(files.length);
+  //   if (files.length > 0) {
+  //     const newImages = Array.from(files).map((file) => ({
+  //       url: URL.createObjectURL(file),
+  //       fileData: file,
+  //     }));
+
+  //     setSelectedImage((prevImages) => {
+  //       const updatedImageSelect = [...prevImages];
+  //       updatedImageSelect[index] = newImages;
+  //       return updatedImageSelect;
+  //     });
+  //   }
+  // };
 
   function done(index) {
     setDisable((prevDisable) => {
@@ -376,7 +418,9 @@ console.log(files.length)
                   </div>
                   {/**  IMAGES ** */}
                   <div className="activity--form--image">
-                    <Typography variant="h5" sx={{mb:3,fontWeight:400}}>Add Images Of Your Activity</Typography>
+                    <Typography variant="h5" sx={{ mb: 3, fontWeight: 400 }}>
+                      Add Images Of Your Activity
+                    </Typography>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                       <Badge badgeContent={imageLength[index]} color="error">
                         <AddAPhotoIcon color="secondary" />
@@ -388,7 +432,7 @@ console.log(files.length)
                         onChange={(e) => handleImageChange(e, index)}
                       />
                     </Box>
-                    <Grid container spacing={2}>
+                    {/* <Grid container spacing={2}>
                       {selectedImage[index] &&
                         selectedImage[index].map((image, imageIndex) => (
                           <Grid item xs={12} sm={6} key={imageIndex}>
@@ -406,7 +450,7 @@ console.log(files.length)
                             />
                           </Grid>
                         ))}
-                    </Grid>
+                    </Grid> */}
                   </div>
                 </Box>
                 <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
