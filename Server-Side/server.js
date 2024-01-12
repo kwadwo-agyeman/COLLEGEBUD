@@ -43,6 +43,7 @@ app.use('/updateActivities', require('./routes/updateActivityCards'));
 app.use('/getActivitiesDetails', require('./routes/getActivityDetails'));
 app.use('/deleteActivity', require('./routes/deleteActivity'));
 app.use('/activityFiles', require('./routes/activityFiles'));
+app.use('/getActivityFiles', require('./routes/getActivityFiles'))
 app.use(verifyJWT)
 
 // app.use('/')

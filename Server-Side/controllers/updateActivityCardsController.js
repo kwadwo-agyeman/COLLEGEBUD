@@ -10,10 +10,10 @@ const handleActivityCards = async (req, res) => {
         modalStates
     } = req.body;
     
-    console.log('Received data:', cardArr, cardDetails, title, formData, description, modalStates);
+    // console.log('Received data:', cardArr, cardDetails, title, formData, description, modalStates);
 
     const username = req.headers.username;
-    console.log(username)
+    // console.log(username)
 
     try {
         const foundUser = await users.findOne({ username }).exec();
@@ -27,7 +27,7 @@ const handleActivityCards = async (req, res) => {
             $set: { cardArr, cardDetails, title, description, formData, modalStates }
         });
 
-        console.log('Update result:', result);
+        // console.log('Update result:', result);
 
         if (result.modifiedCount > 0) {
             // Update successful

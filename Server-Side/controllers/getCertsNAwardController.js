@@ -8,7 +8,7 @@ const handleGetCertsAndAwards = async (req, res) => {
         const foundUser = await users.findOne({ username });
         if (!foundUser) return res.sendStatus(400);
         const certPaths = foundUser.certsAndAwards;
-        console.log(certPaths);
+        // console.log(certPaths);
 
         // Use Promise.all to wait for all promises in the array to resolve
         const certsArray = await Promise.all(certPaths.map(async (filePath) => {
@@ -26,6 +26,7 @@ const handleGetCertsAndAwards = async (req, res) => {
 
     } catch (err) {
         console.error(`Error ${err}`);
+        return res.sendStatus(400);
     }
 }
 

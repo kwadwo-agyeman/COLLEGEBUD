@@ -20,7 +20,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CheckCircle from "@mui/icons-material/CheckCircle";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { styled } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "../api/axios";
 import { useAuth } from "./AuthProvider";
@@ -57,46 +57,64 @@ function ActivityCards(props) {
   const [selectedImage, setSelectedImage] = useState(
     props.cardArr.map(() => [])
   );
+  console.log(selectedImage);
   //Image files length
   const [imageLength, setImageLength] = useState(props.cardArr.map(() => 0));
+  const [activityFileUpdate,setActivityFileUpdate] = useState(false)
 
-  const {auth} = useAuth();
+  const { auth } = useAuth();
   const user = auth.username;
 
   //send Image files
   const handleImageChange = async (e, index) => {
     try {
       const files = e.target.files;
-      console.log(files)
+      console.log(files);
       const formData = new FormData();
-      console.log(formData)
+      console.log(formData);
 
       for (let i = 0; i < files.length; i++) {
-        const file = files[i]
-        formData.append(`Activity_${i + 1}`,file);
-      };
-
-      // setSelectedImage((prevArr)=>{
-      //   const updatedArr = [...prevArr];
-      //   updatedArr[index] = formData;
-      //   return updatedArr;
-      // })
-
-      const response = await axios.post('/activityFiles',
-      formData,
-      {
-        headers:{
-          'Content-Type':'multipart/form-data',
-          selectedImage: JSON.stringify({selectedImage}),
-          username: user,
-          index: index
-        },
-        withCredentials: true
+        const file = files[i];
+        formData.append(`Activity_${i + 1}`, file);
       }
-      )
+
+    // setImageLength((prevLength) => {
+    //   const updatedLength = [...prevLength];
+    //   updatedLength[index] = files.length;
+    //   return updatedLength;
+    // });
+
+      const response = await axios.post("/activityFiles", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          // selectedImage: JSON.stringify({ selectedImage }),
+          username: user,
+          index: index,
+        },
+        withCredentials: true,
+      });
       console.log("success");
+      setActivityFileUpdate(true)
     } catch (err) {
       console.log("failure");
+    }
+  };
+
+  useEffect(() => {
+    user !== "" &&  getActivityFiles();
+  }, [user,selectedImage]);
+
+  const getActivityFiles = async () => {
+    try {
+      const response = await axios.get("/getActivityFiles", {
+        headers: {
+          username: user,
+        },
+        withCredentials: true,
+      });
+      setSelectedImage(response?.data);
+    } catch (err) {
+      console.log("failed",err);
     }
   };
   //handle image selection
@@ -432,13 +450,13 @@ function ActivityCards(props) {
                         onChange={(e) => handleImageChange(e, index)}
                       />
                     </Box>
-                    {/* <Grid container spacing={2}>
+                    <Grid container spacing={2} sx={{mt:4}}>
                       {selectedImage[index] &&
                         selectedImage[index].map((image, imageIndex) => (
                           <Grid item xs={12} sm={6} key={imageIndex}>
                             <img
                               key={imageIndex}
-                              src={image.url}
+                              src={image}
                               alt={`activity-image-${imageIndex}`}
                               style={{
                                 display: "block",
@@ -450,7 +468,7 @@ function ActivityCards(props) {
                             />
                           </Grid>
                         ))}
-                    </Grid> */}
+                    </Grid>
                   </div>
                 </Box>
                 <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>

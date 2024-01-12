@@ -64,9 +64,12 @@ const handleActivityFiles = async (req, res) => {
         await saveActivityFiles(files, username, index, number)
 
         console.log(files, username, index, number);
-
+        res.sendStatus(200);
+        return;
     } catch (err) {
-        console.error(`Error:${err}`)
+        console.error(`Error:${err}`);
+        res.sendStatus(500);
+        return; 
     }
 }
 
