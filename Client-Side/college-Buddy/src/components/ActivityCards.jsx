@@ -23,6 +23,7 @@ import { styled } from "@mui/material";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "../api/axios";
+import activityGif from "../assets/activityFileLoader.gif";
 import { useAuth } from "./AuthProvider";
 
 const StyledCardAction = styled(CardActions)({
@@ -60,7 +61,8 @@ function ActivityCards(props) {
   console.log(selectedImage);
   //Image files length
   const [imageLength, setImageLength] = useState(props.cardArr.map(() => 0));
-  const [activityFileUpdate,setActivityFileUpdate] = useState(false)
+  const [activityFileUpdate, setActivityFileUpdate] = useState(false);
+  const [loadingActivityFiles, setLoadingActivityFiles] = useState(false);
 
   const { auth } = useAuth();
   const user = auth.username;
@@ -78,31 +80,37 @@ function ActivityCards(props) {
         formData.append(`Activity_${i + 1}`, file);
       }
 
-    // setImageLength((prevLength) => {
-    //   const updatedLength = [...prevLength];
-    //   updatedLength[index] = files.length;
-    //   return updatedLength;
-    // });
-
       const response = await axios.post("/activityFiles", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          // selectedImage: JSON.stringify({ selectedImage }),
           username: user,
           index: index,
         },
         withCredentials: true,
       });
       console.log("success");
-      setActivityFileUpdate(true)
+      setLoadingActivityFiles(true);
+      setActivityFileUpdate((prev) => !prev);
     } catch (err) {
       console.log("failure");
     }
   };
 
   useEffect(() => {
-    user !== "" &&  getActivityFiles();
-  }, [user,selectedImage]);
+    const fetchData = async () => {
+      try {
+        if (user !== "") {
+          await getActivityFiles();
+        }
+      } catch (err) {
+        console.error("Failed to fetch activity files", err);
+      }
+    };
+
+    fetchData();
+
+    // Do not include selectedImage in the dependency array
+  }, [user, activityFileUpdate]);
 
   const getActivityFiles = async () => {
     try {
@@ -112,33 +120,12 @@ function ActivityCards(props) {
         },
         withCredentials: true,
       });
+      setLoadingActivityFiles(false);
       setSelectedImage(response?.data);
     } catch (err) {
-      console.log("failed",err);
+      console.log("failed", err);
     }
   };
-  //handle image selection
-  // const handleImageChange = (e, index) => {
-  //   const files = e.target.files;
-  //   setImageLength((prevLength) => {
-  //     const updatedLength = [...prevLength];
-  //     updatedLength[index] = files.length;
-  //     return updatedLength;
-  //   });
-  //   console.log(files.length);
-  //   if (files.length > 0) {
-  //     const newImages = Array.from(files).map((file) => ({
-  //       url: URL.createObjectURL(file),
-  //       fileData: file,
-  //     }));
-
-  //     setSelectedImage((prevImages) => {
-  //       const updatedImageSelect = [...prevImages];
-  //       updatedImageSelect[index] = newImages;
-  //       return updatedImageSelect;
-  //     });
-  //   }
-  // };
 
   function done(index) {
     setDisable((prevDisable) => {
@@ -450,8 +437,13 @@ function ActivityCards(props) {
                         onChange={(e) => handleImageChange(e, index)}
                       />
                     </Box>
-                    <Grid container spacing={2} sx={{mt:4}}>
-                      {selectedImage[index] &&
+                    <Grid container spacing={2} sx={{ mt: 4 }}>
+                      {loadingActivityFiles ? (
+                        <div >
+                          <img style={{height:"100%",width:"100%"}} src={activityGif}/>
+                        </div>
+                      ) : (
+                        selectedImage[index] &&
                         selectedImage[index].map((image, imageIndex) => (
                           <Grid item xs={12} sm={6} key={imageIndex}>
                             <img
@@ -467,7 +459,8 @@ function ActivityCards(props) {
                               }}
                             />
                           </Grid>
-                        ))}
+                        ))
+                      )}
                     </Grid>
                   </div>
                 </Box>
