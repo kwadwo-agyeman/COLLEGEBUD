@@ -8,7 +8,7 @@ const handleGetProfile = async (req, res) => {
         const foundUser = await users.findOne({ username }).exec();
         if (!foundUser) return res.sendStatus(400);
 
-        const filePath = foundUser.profilePath; // Adjust the path based on your setup
+        const filePath = foundUser.profilePath;
 
         // Read the file and send it in the response
         const fileData = await fsPromises.readFile(filePath);

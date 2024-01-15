@@ -9,3 +9,4 @@ f8a8f0ca-4ac8-4ed4-802d-8e3eaafa76ba	2024/01/08 15:34:58	Error: Error: Invalid f
 9573db81-1e56-4190-942d-37790cc38487	2024/01/08 21:38:59	Error: Error: Invalid file type. Only PNG, JPEG, and JPG files are allowed.
 22261af7-98bb-4229-93ac-6f26831f2003	2024/01/11 14:34:14	Error: MulterError: Unexpected field
 764c01d7-6206-4fc7-9f83-8ab38c1dfb62	2024/01/11 14:38:36	Error: MulterError: Unexpected field
+20df51d7-180d-49bc-8078-36245985de97	2024/01/15 11:28:07	Error: MulterError: Unexpected field

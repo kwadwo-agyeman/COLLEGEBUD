@@ -70,7 +70,13 @@ function ActivityCards(props) {
   //send Image files
   const handleImageChange = async (e, index) => {
     try {
+      const fileInput = document.getElementById("fileInput");
       const files = e.target.files;
+      if(files.length > 4){
+        alert("You can only select 4 images");
+
+        return fileInput.value = null
+      }
       console.log(files);
       const formData = new FormData();
       console.log(formData);
@@ -433,6 +439,7 @@ function ActivityCards(props) {
                       <input
                         type="file"
                         accept="image/*"
+                        id="fileInput"
                         multiple
                         onChange={(e) => handleImageChange(e, index)}
                       />

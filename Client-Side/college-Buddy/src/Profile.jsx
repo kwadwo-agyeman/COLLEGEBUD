@@ -83,7 +83,7 @@ function Profile(props) {
     if (formCreated ? user !== " " && formCreated : user !== " ") {
       setTimeout(() => {
         fetchProfileImg();
-      }, 200);
+      }, 100);
     }
   }, [user, formCreated, props.selectedFile]);
 
@@ -159,7 +159,7 @@ function Profile(props) {
   ////Send Profile Image
   useEffect(() => {
     user !== "" && myProfFile();
-  }, [user, props.selectedFile]);
+  }, [props.selectedFile]);
 
   const myProfFile = async () => {
     const formData = new FormData();
